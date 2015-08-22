@@ -36,6 +36,9 @@
     "chai": "*",
     "request": "*"
   },
+  "dependencies": {
+    "request": "*"
+  },
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"
