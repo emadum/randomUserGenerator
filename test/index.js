@@ -62,6 +62,7 @@ describe("random-user-generator", function () {
         email: "email",
         telephone: "phone"
       },
+      fields: undefined,
       writeToFile: "output.json"
     }, function(user) {
       user.should.have.property("firstName");
@@ -75,6 +76,57 @@ describe("random-user-generator", function () {
   });
 
   it("should be able to have defaults used as config options when we create a new RUG object", function(done) {
-    assert(false);
+    var randomUserGenerator = new RandomUserGenerator({
+      map: {
+        firstName: "name.first",
+        email: "email",
+        telephone: "phone"
+      },
+      fields: undefined,
+      writeToFile: "output.json"
+    });
+    randomUserGenerator.getOne(function(user) {
+      user.should.have.property("firstName");
+      user.firstName.should.be.ok;
+      user.should.have.property("email");
+      user.email.should.be.ok;
+      user.should.have.property("telephone");
+      user.telephone.should.be.ok;
+      done();
+    });
   });
+
+  it("should return only users with the specified gender", function(done) {
+    var randomUserGenerator = new RandomUserGenerator();
+    randomUserGenerator.getMany(5, {gender: "female"}, function(users) {
+      for (var i = 0; i < users.length; i++) {
+        users[i].gender.should.equal("female");
+      }
+      done();
+    });
+  });
+
+  it("should return only users with the specified nationality", function(done) {
+    var randomUserGenerator = new RandomUserGenerator();
+    randomUserGenerator.getMany(5, {nationality: "US"}, function(users) {
+      //Nationality is part of the results object, not the users object.  Can't tset
+      for (var i = 0; i < users.length; i++) {
+        users[i].name.first.should.be.ok;
+      }
+      done();
+    });
+  });
+
+  it("should always return the same user with the same seed", function(done) {
+    var randomUserGenerator = new RandomUserGenerator();
+    randomUserGenerator.getOne({seed: "helloworld"}, function(user) {
+      var firstUser = user;
+      randomUserGenerator.getOne({seed: "helloworld"}, function(user) {
+        var secondUser = user;
+        firstUser.name.last.should.equal(secondUser.name.last);
+        done();
+      });
+    });
+  });
+
 });
