@@ -1,6 +1,6 @@
 {
   "name": "random-user-generator",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Random user generator using the randomuser.me services. It can bea single user or an array and outputs to the console or a file.",
   "homepage": "",
   "repository": "joellord/random-user-generator",
