@@ -1,10 +1,9 @@
 "use strict";
 
-var RUG = require("../dist");
+var RandomUserGenerator = require("../lib");
 
-var rug = new RUG();
+var randomUserGenerator = new RandomUserGenerator();
 
-rug.getOne(function (user) {
+randomUserGenerator.getOne(function (user) {
   console.log(user);
 });
-
