@@ -104,7 +104,7 @@ RUG.prototype.getMany = function (howMany, options, cb) {
         //Only specific fields
         for (var j = 0; j < options.fields.length; j++) {
           var field = options.fields[j];
-          newUser[field] = (body.results[i].user[field]) ? body.results[i].user[field] : undefined;
+          newUser[field] = (body.results[i][field]) ? body.results[i][field] : undefined;
         }
       } else if (options && options.map) {
         //Map the fields
@@ -119,16 +119,16 @@ RUG.prototype.getMany = function (howMany, options, cb) {
           if (target.indexOf(".") > -1) {
             var fields = target.split(".");
             //according to the current documentation, it can't be deeper than 2 levels
-            fieldValue = body.results[i].user[fields[0]][fields[1]];
+            fieldValue = body.results[i][fields[0]][fields[1]];
           } else {
-            fieldValue = body.results[i].user[target];
+            fieldValue = body.results[i][target];
           }
 
           //Add to the new User
           newUser[mappedField] = fieldValue;
         }
       } else {
-        newUser = body.results[i].user;
+        newUser = body.results[i];
       }
 
       //Then push it
@@ -178,7 +178,7 @@ RUG.prototype.outputToFile = function (data, cb) {
     }
 
     cb(data);
-  }); 
+  });
 };
 
 module.exports = RUG;
